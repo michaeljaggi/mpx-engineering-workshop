@@ -20,10 +20,13 @@ test("public catalog and match routes use fictional data", async () => {
     assert.equal(health.data, "synthetic");
 
     const jobs = await (await fetch(`${base}/api/jobs`)).json();
-    assert.equal(jobs.jobs.length, 8);
+    assert.equal(jobs.jobs.length, 7);
+    assert.equal(new Set(jobs.jobs.map((job) => job.canonicalId)).size, 7);
+    const overview = await (await fetch(`${base}/api/overview`)).json();
+    assert.deepEqual(overview.catalog, { visibleListings: 7, uniqueRoles: 7, partnerListings: 1 });
 
     const matches = await (await fetch(`${base}/api/matches?candidateId=candidate-001`)).json();
-    assert.equal(matches.jobs.length, 8);
+    assert.equal(matches.jobs.length, 7);
     assert.equal(matches.jobs[0].match.score, 90);
     assert.equal(JSON.stringify(matches).includes("privateNotes"), false);
   });
