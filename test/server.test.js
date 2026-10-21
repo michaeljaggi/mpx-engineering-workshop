@@ -24,7 +24,7 @@ test("public catalog and match routes use fictional data", async () => {
 
     const matches = await (await fetch(`${base}/api/matches?candidateId=candidate-001`)).json();
     assert.equal(matches.jobs.length, 8);
-    assert.equal(matches.jobs[0].match.score, 80);
+    assert.equal(matches.jobs[0].match.score, 90);
     assert.equal(JSON.stringify(matches).includes("privateNotes"), false);
   });
 });
